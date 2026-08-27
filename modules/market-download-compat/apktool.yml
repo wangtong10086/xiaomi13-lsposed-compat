@@ -1,0 +1,18 @@
+version: 3.0.3
+apkFileName: xiaomi-market-download-compat.apk
+usesFramework:
+  ids:
+  - 1
+sdkInfo:
+  minSdkVersion: 27
+  targetSdkVersion: 28
+versionInfo:
+  versionCode: 1
+  versionName: 1.0
+resourcesInfo:
+  packageId: 127
+  packageName: com.codex.xiaomimarketdownloadcompat
+doNotCompress:
+- arsc
+- META-INF/xposed/scope.list
+- assets/xposed_init

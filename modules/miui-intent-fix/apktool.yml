@@ -1,0 +1,16 @@
+version: 3.0.3
+apkFileName: miuiintentfix.apk
+usesFramework:
+  ids:
+  - 1
+sdkInfo:
+  minSdkVersion: 26
+  targetSdkVersion: 36
+versionInfo:
+  versionCode: 15
+  versionName: 2.2-ese-routing
+resourcesInfo:
+  packageId: 127
+  packageName: dev.codex.xiaomiaccount.miuiintentfix
+doNotCompress:
+- arsc

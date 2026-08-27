@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:compileSdkVersion="36" android:compileSdkVersionCodename="16" package="com.codex.xiaomimarketdownloadcompat" platformBuildVersionCode="36" platformBuildVersionName="16">
+    <application android:allowBackup="false" android:debuggable="false" android:hasCode="true" android:label="Xiaomi Market Download Compat">
+        <meta-data android:name="xposedmodule" android:value="true"/>
+        <meta-data android:name="xposeddescription" android:value="Restores DownloadManager cursor compatibility only inside Xiaomi Market."/>
+        <meta-data android:name="xposedminversion" android:value="93"/>
+    </application>
+</manifest>

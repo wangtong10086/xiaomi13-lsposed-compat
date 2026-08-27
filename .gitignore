@@ -1,0 +1,14 @@
+out/
+work/
+**/build/
+**/dist/
+*.apk
+*.idsig
+*.jks
+*.keystore
+*.pem
+*.p12
+*.db
+local.properties
+Thumbs.db
+.DS_Store
