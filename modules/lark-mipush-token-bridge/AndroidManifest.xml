@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:compileSdkVersion="36" android:compileSdkVersionCodename="16" package="com.codex.larkmipushtokenbridge" platformBuildVersionCode="36" platformBuildVersionName="16">
+    <application android:allowBackup="false" android:debuggable="false" android:hasCode="true" android:label="Lark MiPush Token Bridge">
+        <meta-data android:name="xposedmodule" android:value="true"/>
+        <meta-data android:name="xposeddescription" android:value="Calls Lark's own server token-binding callback after XMSF registration."/>
+        <meta-data android:name="xposedminversion" android:value="93"/>
+    </application>
+</manifest>

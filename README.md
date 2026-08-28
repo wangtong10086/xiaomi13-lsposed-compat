@@ -1,14 +1,15 @@
 # Xiaomi 13 LSPosed compatibility modules
 
-Three narrowly scoped modules used to restore Xiaomi application behavior on a customized Xiaomi 13 (`fuxi`) running Android 16.
+Four narrowly scoped modules used to restore application behavior on a customized Xiaomi 13 (`fuxi`) running Android 16.
 
 | Module | Scope | Purpose |
 | --- | --- | --- |
 | `camera-native-hook` | `com.android.camera` | camera2 hidden-API exemption and Android 16 `TotalCaptureResult` bridge used by Xiaomi Camera |
+| `lark-mipush-token-bridge` | `com.ss.android.lark` main process | completes Feishu's own server-side MiPush token-binding callback after XMSF registration |
 | `market-download-compat` | `com.xiaomi.market` | restores the DownloadManager filename cursor access expected by Xiaomi Market |
 | `miui-intent-fix` | Xiaomi Account, TSM, NFC/eSE, and `system` | Xiaomi account/TSM compatibility, eSE routing, double-power Xiaomi cards, triple-power Google Wallet |
 
-The Apktool projects are the exact rebuildable smali representation extracted from the validated APKs. `reference/miui-intent-fix-java` is a JADX view for navigation only; it is not the canonical build source.
+The Apktool projects are the exact rebuildable smali representation of the installed modules. `reference/miui-intent-fix-java` is a JADX view for navigation only; it is not the canonical build source.
 
 ## Build
 
@@ -31,3 +32,5 @@ Signing requires an external keystore and environment variables; no key is store
 Known-good signed APKs are release assets. Their checksums are in `RELEASES.md`.
 
 Because these modules hook private implementation details, re-review them after every Android, Xiaomi app, LSPosed, or Vector update.
+
+MiPush registration findings for reviewed Android 16 applications are documented in `docs/xmsf-registration-android16.md`. The matrix distinguishes module injection, server registration, app-private regId persistence, and actual delivery; do not treat them as one signal.

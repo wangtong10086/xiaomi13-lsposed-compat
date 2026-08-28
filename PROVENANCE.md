@@ -1,7 +1,8 @@
 # Source provenance
 
 - Canonical module sources are Apktool 3.0.3 projects reconstructed from the final locally validated APKs.
-- `camera-native-hook` and `market-download-compat` were authored as compact smali modules for the observed Android 16 compatibility gaps.
+- `camera-native-hook`, `market-download-compat`, and `lark-mipush-token-bridge` were authored as compact smali modules for observed compatibility gaps.
+- `lark-mipush-token-bridge` was derived from the control flow in the locally installed Feishu 7.75.15 APK. No Feishu or Xiaomi bytecode, credentials, registration tokens, account data, or proprietary binaries are vendored.
 - `miui-intent-fix` was preserved as exact smali plus a non-canonical JADX reference view.
 - APK signatures and signing keys are intentionally excluded. Rebuilding changes the signing certificate unless the original private key is supplied externally.
 - Empty Apktool resource package metadata produced by decoding resource-minimal APKs was normalized to the manifest package so Apktool 3.0.3 can rebuild with `aapt2`.
