@@ -6,5 +6,6 @@
 | `lark-mipush-token-bridge.apk` | 16,923 bytes | `1329e1a87cdd500e5edcc4a23418d4cf1ef1b58acaab9327270216f4e89788cc` |
 | `xiaomi-market-download-compat-v1.apk` | 16,923 bytes | `b276dc1327388f078958c2e954cc3080dee0800b25a1de27319610de2b71508d` |
 | `miuiintentfix.apk` | 45,593 bytes | `2fc3d1cdb4212aa74c4e85fe30c70a7e95d16c5fdad9045f20705174b8a4aa92` |
+| `xmsf-app-registration-compat.apk` | 25,120 bytes | `0303c9ff6598f6e7471ba12af9dd818f7d1ac49ccc4fb124b85987232324b519` |
 
 The release APKs are the validated installed lineage. A locally rebuilt APK can have equivalent bytecode but a different certificate and hash.

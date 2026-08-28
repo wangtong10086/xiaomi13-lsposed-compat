@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.codex.xmsfappregistrationcompat"
+    android:versionCode="1"
+    android:versionName="1.0">
+    <uses-sdk android:minSdkVersion="27" android:targetSdkVersion="28" />
+    <application
+        android:allowBackup="false"
+        android:debuggable="false"
+        android:hasCode="true"
+        android:label="XMSF App Registration Compat">
+        <meta-data android:name="xposedmodule" android:value="true" />
+        <meta-data android:name="xposeddescription" android:value="Runs reviewed app-owned MiPush registration paths in a bounded compatibility window." />
+        <meta-data android:name="xposedminversion" android:value="93" />
+    </application>
+</manifest>

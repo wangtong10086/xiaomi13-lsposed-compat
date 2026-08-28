@@ -1,6 +1,6 @@
 # Xiaomi 13 LSPosed compatibility modules
 
-Four narrowly scoped modules used to restore application behavior on a customized Xiaomi 13 (`fuxi`) running Android 16.
+Five narrowly scoped modules used to restore application behavior on a customized Xiaomi 13 (`fuxi`) running Android 16.
 
 | Module | Scope | Purpose |
 | --- | --- | --- |
@@ -8,8 +8,9 @@ Four narrowly scoped modules used to restore application behavior on a customize
 | `lark-mipush-token-bridge` | `com.ss.android.lark` main process | completes Feishu's own server-side MiPush token-binding callback after XMSF registration |
 | `market-download-compat` | `com.xiaomi.market` | restores the DownloadManager filename cursor access expected by Xiaomi Market |
 | `miui-intent-fix` | Xiaomi Account, TSM, NFC/eSE, and `system` | Xiaomi account/TSM compatibility, eSE routing, double-power Xiaomi cards, triple-power Google Wallet |
+| `xmsf-app-registration-compat` | `system`/`android`; temporary exact-version app scope | bounded app-owned XMSF registration for reviewed packages plus Alipay callback-component protection |
 
-The Apktool projects are the exact rebuildable smali representation of the installed modules. `reference/miui-intent-fix-java` is a JADX view for navigation only; it is not the canonical build source.
+Most modules are exact rebuildable Apktool/smali projects. `xmsf-app-registration-compat` is a small Java module built against local Xposed API stubs; the stubs are compile-time-only and are not packaged. `reference/miui-intent-fix-java` is a JADX view for navigation only.
 
 ## Build
 
@@ -20,6 +21,8 @@ Install Java, Apktool 3.0.3, and Android build-tools. Build unsigned output with
 ```
 
 Signing requires an external keystore and environment variables; no key is stored in this repository. See `tools/Build-ApktoolModule.ps1` help.
+
+Build the Java-based XMSF module with `tools/Build-XposedJavaModule.ps1`; it requires local Android platform/build-tools paths and the same external signing inputs.
 
 ## Install/upgrade
 
