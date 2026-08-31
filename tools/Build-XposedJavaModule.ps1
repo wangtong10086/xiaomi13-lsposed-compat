@@ -9,7 +9,8 @@ param(
     [Parameter(Mandatory)][string]$JavaHome,
     [Parameter(Mandatory)][string]$OutputDir,
     [Parameter(Mandatory)][string]$Keystore,
-    [Parameter(Mandatory)][string]$KeyAlias
+    [Parameter(Mandatory)][string]$KeyAlias,
+    [string]$OutputFileName
 )
 
 Set-StrictMode -Version Latest
@@ -27,6 +28,12 @@ if (-not $env:APK_KEYSTORE_PASSWORD -or -not $env:APK_KEY_PASSWORD) {
 
 $module = [IO.Path]::GetFullPath($ModuleDir)
 $output = [IO.Path]::GetFullPath($OutputDir)
+$moduleName = Split-Path -Leaf $module
+if (-not $OutputFileName) { $OutputFileName = "$moduleName.apk" }
+if ([IO.Path]::GetFileName($OutputFileName) -ne $OutputFileName -or
+        -not $OutputFileName.EndsWith('.apk', [StringComparison]::OrdinalIgnoreCase)) {
+    throw "OutputFileName must be a leaf .apk file name: $OutputFileName"
+}
 $manifest = Join-Path $module 'AndroidManifest.xml'
 $sourceRoot = Join-Path $module 'src'
 $stubRoot = Join-Path $module 'stubs'
@@ -82,7 +89,7 @@ try {
 }
 
 $aligned = Join-Path $resolvedWork 'aligned.apk'
-$signed = Join-Path $output 'xmsf-app-registration-compat.apk'
+$signed = Join-Path $output $OutputFileName
 & $ZipalignPath -f 4 $baseApk $aligned
 if ($LASTEXITCODE -ne 0) { throw 'zipalign failed.' }
 Copy-Item -LiteralPath $aligned -Destination $signed -Force
