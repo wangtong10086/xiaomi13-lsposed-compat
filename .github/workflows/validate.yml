@@ -1,0 +1,53 @@
+name: validate
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  static-windows:
+    name: Static (Windows)
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Parse PowerShell
+        shell: pwsh
+        run: |
+          $errors = @()
+          Get-ChildItem -Recurse -Filter *.ps1 | ForEach-Object {
+            $tokens = $null
+            $parseErrors = $null
+            [void][System.Management.Automation.Language.Parser]::ParseFile($_.FullName, [ref]$tokens, [ref]$parseErrors)
+            $errors += $parseErrors
+          }
+          if ($errors.Count) { $errors | Format-List -Force; throw 'PowerShell parse failed.' }
+      - name: Test WeChat token bridge safety guards
+        shell: pwsh
+        run: ./tools/Test-WeChatFcmTokenBridge.ps1
+      - name: Compile Java modules against Android and Xposed stubs
+        shell: pwsh
+        run: |
+          $androidJar = Get-ChildItem "$env:ANDROID_HOME/platforms" -Directory |
+            Sort-Object Name -Descending |
+            ForEach-Object { Join-Path $_.FullName android.jar } |
+            Where-Object { Test-Path $_ } |
+            Select-Object -First 1
+          if (-not $androidJar) { throw 'Android platform jar not found.' }
+          foreach ($module in @('wechat-fcm-token-bridge', 'xmsf-app-registration-compat')) {
+            $root = Join-Path $PWD "modules/$module"
+            $stubOut = Join-Path $env:RUNNER_TEMP "$module-stubs"
+            $moduleOut = Join-Path $env:RUNNER_TEMP "$module-classes"
+            New-Item -ItemType Directory -Force $stubOut, $moduleOut | Out-Null
+            $stubs = @(Get-ChildItem "$root/stubs" -Recurse -Filter *.java | ForEach-Object FullName)
+            $sources = @(Get-ChildItem "$root/src" -Recurse -Filter *.java | ForEach-Object FullName)
+            & javac -encoding UTF-8 -source 8 -target 8 -classpath $androidJar -d $stubOut @stubs
+            if ($LASTEXITCODE) { throw "$module stub compilation failed." }
+            & javac -encoding UTF-8 -source 8 -target 8 -classpath "$androidJar;$stubOut" -d $moduleOut @sources
+            if ($LASTEXITCODE) { throw "$module source compilation failed." }
+          }
+      - name: Whitespace check
+        shell: pwsh
+        run: git diff --check

@@ -1,6 +1,11 @@
 # Xiaomi 13 LSPosed compatibility modules
 
+English | [简体中文](README.zh-CN.md)
+
 Six narrowly scoped modules used to restore application behavior on a customized Xiaomi 13 (`fuxi`) running Android 16.
+
+> [!WARNING]
+> Release APKs are **prerelease, exact-version compatibility artifacts**. Verify the documented app/ROM/LSPosed version, APK SHA-256, signing certificate, and hook scope before installing. Never widen a scope or bypass a version/signer guard just to make a module load.
 
 | Module | Scope | Purpose |
 | --- | --- | --- |
@@ -33,10 +38,14 @@ Build the Java-based XMSF or WeChat module with `tools/Build-XposedJavaModule.ps
 4. Reboot and inspect logs for the module's activation message.
 5. Test the affected feature and unrelated features in the same app.
 
-Known-good signed APKs are release assets. Their checksums are in `RELEASES.md`.
+Locally validated signed APKs are prerelease assets. Their checksums are in `RELEASES.md`; the installed certificate must also match the expected upgrade lineage. A source rebuild with another key is not an in-place upgrade.
 
 Because these modules hook private implementation details, re-review them after every Android, Xiaomi app, LSPosed, or Vector update.
 
 MiPush registration findings for reviewed Android 16 applications are documented in `docs/xmsf-registration-android16.md`. The matrix distinguishes module injection, server registration, app-private regId persistence, and actual delivery; do not treat them as one signal.
 
 The exact-version WeChat repair and privacy-safe validation procedure is documented in `docs/wechat-fcm-token-bridge.md`.
+
+## Contributing and security
+
+Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request. Scope expansion, removal of a signer/version guard, and new hooks into `system` are security-sensitive changes. Report vulnerabilities privately as described in [SECURITY.md](SECURITY.md).

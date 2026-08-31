@@ -1,0 +1,45 @@
+name: Compatibility report
+description: Report an exact-version module result with sanitized evidence.
+title: "[Compatibility]: "
+labels: [compatibility]
+body:
+  - type: markdown
+    attributes:
+      value: Never attach proprietary APKs, private databases, signing keys, tokens, account data, message content, device serials, or raw logs.
+  - type: input
+    id: module
+    attributes:
+      label: Module and commit/release
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Public ROM, Android, LSPosed, and target-app versions
+    validations:
+      required: true
+  - type: input
+    id: scope
+    attributes:
+      label: Exact enabled scope
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Expected behavior, actual behavior, and sanitized evidence
+    validations:
+      required: true
+  - type: textarea
+    id: rollback
+    attributes:
+      label: Disable/uninstall rollback result
+    validations:
+      required: true
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacy check
+      options:
+        - label: I removed tokens, IDs, personal data, keys, proprietary binaries, databases, and message content.
+          required: true

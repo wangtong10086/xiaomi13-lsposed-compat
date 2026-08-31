@@ -1,0 +1,23 @@
+name: Hook proposal
+description: Propose a narrowly scoped compatibility hook.
+title: "[Proposal]: "
+labels: [proposal]
+body:
+  - type: textarea
+    id: failure
+    attributes:
+      label: Compatibility failure and exact target versions
+    validations:
+      required: true
+  - type: textarea
+    id: hook
+    attributes:
+      label: Proposed method, guard, and package/process scope
+    validations:
+      required: true
+  - type: textarea
+    id: safety
+    attributes:
+      label: Privacy, security, and rollback analysis
+    validations:
+      required: true
