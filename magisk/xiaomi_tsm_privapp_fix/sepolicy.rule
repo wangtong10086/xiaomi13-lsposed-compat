@@ -1,0 +1,69 @@
+allow priv_app secure_element_service service_manager find
+allow priv_app property_socket sock_file write
+allow priv_app init unix_stream_socket connectto
+allow priv_app nfc_prop property_service set
+
+# OEM MTD: dedicated domain for the unchanged, hash-verified executable.
+# The ROM omits the OEM hwservice context; default registry access is restricted
+# to this trusted daemon and its secure-element HAL client, never application domains.
+type hal_mtdservice_default domain
+typeattribute hal_mtdservice_default halserverdomain
+type hal_mtdservice_default_exec file_type
+typeattribute hal_mtdservice_default_exec exec_type
+typeattribute hal_mtdservice_default_exec vendor_file_type
+allow init hal_mtdservice_default_exec file { read getattr map execute open }
+allow init hal_mtdservice_default process { transition siginh rlimitinh }
+type_transition init hal_mtdservice_default_exec process hal_mtdservice_default
+allow hal_mtdservice_default hal_mtdservice_default_exec file { read getattr map execute open entrypoint }
+allow hal_mtdservice_default hwservicemanager binder { call transfer }
+allow hwservicemanager hal_mtdservice_default binder { call transfer }
+allow hwservicemanager hal_mtdservice_default dir search
+allow hwservicemanager hal_mtdservice_default file { read map open }
+allow hwservicemanager hal_mtdservice_default process getattr
+allow hal_mtdservice_default default_android_hwservice hwservice_manager { add find }
+allow hal_mtdservice_default hidl_base_hwservice hwservice_manager add
+allow hal_secure_element_default default_android_hwservice hwservice_manager find
+allow hal_secure_element_default hal_mtdservice_default binder { call transfer }
+allow hal_mtdservice_default hal_secure_element_default binder transfer
+allow hal_secure_element_default hal_mtdservice_default fd use
+allow hal_mtdservice_default hal_mlipay_default binder { call transfer }
+allow hal_mlipay_default hal_mtdservice_default binder transfer
+allow hal_mtdservice_default hal_mlipay_default fd use
+allow hal_mtdservice_default hal_mlipay_hwservice hwservice_manager find
+allow hal_mtdservice_default firmware_file dir { read getattr open search }
+allow hal_mtdservice_default firmware_file file { read getattr map open }
+allow hal_mtdservice_default vendor_persist_file dir { read getattr open search }
+allow hal_mtdservice_default vendor_persist_drm_file dir { read getattr open search }
+allow hal_mtdservice_default vendor_persist_drm_file file { read getattr map open }
+allow hal_mtdservice_default tee_device chr_file { ioctl read write getattr map open }
+allow hal_mtdservice_default vendor_smcinvoke_device chr_file { ioctl read write open }
+allow hal_mtdservice_default vendor_dmabuf_qseecom_heap_device chr_file { ioctl read open }
+allow hal_mtdservice_default vendor_dmabuf_qseecom_ta_heap_device chr_file { ioctl read open }
+allow hal_mtdservice_default ion_device chr_file { ioctl read write getattr map open }
+allow hal_mtdservice_default vendor_qce_device chr_file { ioctl read write getattr map open }
+allow hal_mtdservice_default init unix_stream_socket connectto
+allow hal_mtdservice_default property_socket sock_file write
+allow hal_mtdservice_default vendor_payment_security_prop property_service set
+allow hal_mtdservice_default vendor_payment_security_prop file { read getattr map open }
+allow hal_mtdservice_default vendor_system_prop file { read getattr map open }
+allow hal_mtdservice_default vendor_tee_listener_prop file { read getattr map open }
+allow init hal_mtdservice_default process2 nosuid_transition
+allow hal_mtdservice_default hal_mtdservice_default process { getsched setsched fork sigchld signal }
+allow hal_mtdservice_default hal_mtdservice_default dir { search read getattr open }
+allow hal_mtdservice_default hal_mtdservice_default file { read getattr open map }
+allow hal_mtdservice_default hal_mtdservice_default lnk_file { read getattr }
+allow hal_mtdservice_default hal_mtdservice_default unix_dgram_socket { create connect write read getattr getopt setopt }
+allow hal_mtdservice_default vendor_file dir { read open search getattr }
+allow hal_mtdservice_default vendor_file file { read open getattr map execute }
+allow hal_mtdservice_default vendor_file lnk_file { read getattr }
+allow hal_mtdservice_default logdw_socket sock_file write
+allow hal_mtdservice_default logd unix_dgram_socket sendto
+allow hal_mtdservice_default hwbinder_device chr_file { read write open ioctl getattr map }
+allow hal_mtdservice_default same_process_hal_file file { read open getattr map execute }
+allow hal_mtdservice_default mnt_vendor_file dir search
+allow hal_mtdservice_default vendor_default_prop file { read open getattr map }
+allow hal_mtdservice_default servicemanager_prop file { read open getattr map }
+allow hal_mtdservice_default mnt_vendor_file dir getattr
+allow hal_mtdservice_default binder_device chr_file { read write open ioctl getattr map }
+allow hal_mtdservice_default hal_mtdservice_default unix_stream_socket { create connect read write getattr getopt setopt }
+allow hal_mtdservice_default vendor_persist_data_file dir getattr

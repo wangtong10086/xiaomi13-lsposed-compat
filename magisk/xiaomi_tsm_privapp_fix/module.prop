@@ -1,0 +1,6 @@
+id=xiaomi_tsm_privapp_fix
+name=Xiaomi TSM Priv-App and OMAPI Fix
+version=2.4
+versionCode=6
+author=Codex
+description=Preserve TSM/NextPay privilege and OEM MTD fixes, maintain required OMAPI/NFC policy, and opt into the validated transit request ID compatibility mapping.

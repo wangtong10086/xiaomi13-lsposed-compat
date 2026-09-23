@@ -28,6 +28,12 @@
 
 签名需要外部 keystore 与环境变量；仓库不保存密钥。Java 模块使用 `tools/Build-XposedJavaModule.ps1` 构建，并需要本地 Android platform/build-tools 与相同的外部签名输入。
 
+`miui-intent-fix` 2.3 起同时包含原 smali 和新增 Java，使用
+`tools/Build-MiuiIntentFix.py` 构建。小米卡包图标、Provider 可见性及现有 Magisk
+模块的修复见 [小米卡包兼容说明](docs/xiaomi-wallet-compat-android16.md)。
+2.6.9 正式版不包含钱包诊断探针和已经完成的一次性签名迁移钩子；复现实验需显式
+添加 `--include-diagnostics` 构建参数，并单独启用文档规定的诊断标记。
+
 ## 安装与升级
 
 1. 校验 APK SHA-256 与签名证书。
@@ -37,6 +43,7 @@
 5. 同时验证目标功能与同一应用内的无关功能。
 
 本地验证的签名 APK 作为预发布附件提供，校验值见 [RELEASES.md](RELEASES.md)。使用其他密钥重建的 APK 不能视为现有安装的原位升级。
+本次钱包清理更新仅提交源码和文档，记录本地构建校验值，不创建新 Release 或上传 APK。
 
 这些模块 Hook 私有实现细节。每次更新 Android、Xiaomi 应用、LSPosed 或 Vector 后都必须重新审阅。Android 16 MiPush 注册矩阵见 `docs/xmsf-registration-android16.md`；它区分模块注入、服务端注册、应用私有 regId 持久化与真实送达，不能把它们当作同一个信号。微信精确版本修复与隐私安全验收见 `docs/wechat-fcm-token-bridge.md`。
 

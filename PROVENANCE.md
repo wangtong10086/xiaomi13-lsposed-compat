@@ -6,6 +6,13 @@
 - `wechat-fcm-token-bridge` is original Java source built against compile-only Xposed stubs. Its exact-version hooks were derived from the locally installed Google Play WeChat 8.0.72 (`versionCode=3085`) control flow and verified at runtime. It calls only WeChat's own registration path; no WeChat bytecode, Firebase token, payload, account data, or proprietary binary is vendored.
 - `lark-mipush-token-bridge` was derived from the control flow in the locally installed Feishu 7.75.15 APK. No Feishu or Xiaomi bytecode, credentials, registration tokens, account data, or proprietary binaries are vendored.
 - `miui-intent-fix` was preserved as exact smali plus a non-canonical JADX reference view.
+- Its wallet additions in `compat-src` and optional probes in `diagnostics-src`
+  are original compatibility/observation code, derived from local exact-version
+  interface and behavior analysis. `stubs` contains compile-only API signatures.
+  The existing Magisk overlay and startup-script repair contain only configuration,
+  scripts and published software hashes; supply OEM APKs and binaries separately.
+  No third-party decompiled implementation, device identifier, account material,
+  raw log, signed-key value or private signing key is included.
 - APK signatures and signing keys are intentionally excluded. Rebuilding changes the signing certificate unless the original private key is supplied externally.
 - Empty Apktool resource package metadata produced by decoding resource-minimal APKs was normalized to the manifest package so Apktool 3.0.3 can rebuild with `aapt2`.
 - Xiaomi, Android, Magisk, LSPosed, Vector, and app binaries are not vendored.

@@ -49,5 +49,18 @@ jobs:
             if ($LASTEXITCODE) { throw "$module source compilation failed." }
           }
       - name: Whitespace check
+        if: always()
         shell: pwsh
         run: git diff --check
+      - name: Compile wallet variants and test compatibility boundaries
+        # Synthetic fixtures and compile-only stubs; no device or signing secrets.
+        shell: pwsh
+        run: |
+          $androidJar = Get-ChildItem "$env:ANDROID_HOME/platforms" -Directory |
+            Sort-Object Name -Descending |
+            ForEach-Object { Join-Path $_.FullName android.jar } |
+            Where-Object { Test-Path $_ } |
+            Select-Object -First 1
+          if (-not $androidJar) { throw 'Android platform jar not found.' }
+          python tools/Test-WalletJava.py --android-jar $androidJar --output "$env:RUNNER_TEMP/wallet-checks"
+          if ($LASTEXITCODE) { throw 'Wallet compilation or regressions failed.' }
