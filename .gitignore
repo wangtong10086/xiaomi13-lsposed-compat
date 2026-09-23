@@ -12,3 +12,12 @@ work/
 local.properties
 Thumbs.db
 .DS_Store
+__pycache__/
+*.pyc
+*.dex
+*.jar
+*.tar
+*.tar.gz
+*.log
+private/
+rollback/

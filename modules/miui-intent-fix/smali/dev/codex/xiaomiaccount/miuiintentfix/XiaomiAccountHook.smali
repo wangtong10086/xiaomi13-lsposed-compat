@@ -7087,193 +7087,10 @@
     return-void
 .end method
 
+# Preserve the official preload semantics. A successful pretransferIn is not
+# a completed transfer and must not send an early SUCCESS for the order.
 .method private static repairShenzhenTransferConfirm(Ljava/lang/Object;)V
-    .locals 5
-
-    .line 1529
-    if-nez p0, :cond_0
-
-    .line 1530
-    return-void
-
-    .line 1533
-    :cond_0
-    :try_start_0
-    const-string v0, "getCardName"
-
-    const/4 v1, 0x0
-
-    new-array v2, v1, [Ljava/lang/Object;
-
-    invoke-static {p0, v0, v2}, Lde/robv/android/xposed/XposedHelpers;->callMethod(Ljava/lang/Object;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/Object;
-
-    move-result-object v0
-
-    check-cast v0, Ljava/lang/String;
-
-    .line 1534
-    const-string v2, "getActionType"
-
-    new-array v3, v1, [Ljava/lang/Object;
-
-    invoke-static {p0, v2, v3}, Lde/robv/android/xposed/XposedHelpers;->callMethod(Ljava/lang/Object;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/Object;
-
-    move-result-object v2
-
-    check-cast v2, Ljava/lang/String;
-
-    .line 1535
-    const-string v3, "getCoreOperation"
-
-    new-array v4, v1, [Ljava/lang/Object;
-
-    invoke-static {p0, v3, v4}, Lde/robv/android/xposed/XposedHelpers;->callMethod(Ljava/lang/Object;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/Object;
-
-    move-result-object v3
-
-    check-cast v3, Ljava/lang/String;
-
-    .line 1536
-    const-string v4, "getOrderId"
-
-    new-array v1, v1, [Ljava/lang/Object;
-
-    invoke-static {p0, v4, v1}, Lde/robv/android/xposed/XposedHelpers;->callMethod(Ljava/lang/Object;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/Object;
-
-    move-result-object v1
-
-    check-cast v1, Ljava/lang/String;
-
-    .line 1537
-    const-string v4, "SZT_MOT"
-
-    invoke-virtual {v4, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v0
-
-    if-eqz v0, :cond_2
-
-    const-string v0, "TRANSFER_IN"
-
-    .line 1538
-    invoke-virtual {v0, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v0
-
-    if-eqz v0, :cond_2
-
-    const-string v0, "pretransferIn"
-
-    .line 1539
-    invoke-virtual {v0, v3}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v0
-
-    if-eqz v0, :cond_2
-
-    .line 1540
-    invoke-static {v1}, Ldev/codex/xiaomiaccount/miuiintentfix/XiaomiAccountHook;->isEmpty(Ljava/lang/String;)Z
-
-    move-result v0
-
-    if-eqz v0, :cond_2
-
-    sget-object v0, Ldev/codex/xiaomiaccount/miuiintentfix/XiaomiAccountHook;->lastStartTransferInOrderId:Ljava/lang/String;
-
-    .line 1541
-    invoke-static {v0}, Ldev/codex/xiaomiaccount/miuiintentfix/XiaomiAccountHook;->isEmpty(Ljava/lang/String;)Z
-
-    move-result v0
-
-    if-eqz v0, :cond_1
-
-    goto :goto_0
-
-    .line 1544
-    :cond_1
-    const-string v0, "mOrderId"
-
-    sget-object v1, Ldev/codex/xiaomiaccount/miuiintentfix/XiaomiAccountHook;->lastStartTransferInOrderId:Ljava/lang/String;
-
-    invoke-static {p0, v0, v1}, Lde/robv/android/xposed/XposedHelpers;->setObjectField(Ljava/lang/Object;Ljava/lang/String;Ljava/lang/Object;)V
-
-    .line 1545
-    const-string v0, "mCoreOperation"
-
-    const-string v1, "transferIn"
-
-    invoke-static {p0, v0, v1}, Lde/robv/android/xposed/XposedHelpers;->setObjectField(Ljava/lang/Object;Ljava/lang/String;Ljava/lang/Object;)V
-
-    .line 1546
-    new-instance p0, Ljava/lang/StringBuilder;
-
-    invoke-direct {p0}, Ljava/lang/StringBuilder;-><init>()V
-
-    const-string v0, "TSM repaired SZT_MOT confirm orderId="
-
-    invoke-virtual {p0, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object p0
-
-    sget-object v0, Ldev/codex/xiaomiaccount/miuiintentfix/XiaomiAccountHook;->lastStartTransferInOrderId:Ljava/lang/String;
-
-    invoke-virtual {p0, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object p0
-
-    const-string v0, ", coreOperation=transferIn"
-
-    invoke-virtual {p0, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object p0
-
-    invoke-virtual {p0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object p0
-
-    invoke-static {p0}, Ldev/codex/xiaomiaccount/miuiintentfix/XiaomiAccountHook;->log(Ljava/lang/String;)V
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
-
-    .line 1550
-    goto :goto_1
-
-    .line 1542
-    :cond_2
-    :goto_0
-    return-void
-
-    .line 1548
-    :catchall_0
-    move-exception p0
-
-    .line 1549
-    new-instance v0, Ljava/lang/StringBuilder;
-
-    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
-
-    const-string v1, "TSM SZT_MOT confirm repair failed: "
-
-    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v0
-
-    invoke-static {p0}, Ldev/codex/xiaomiaccount/miuiintentfix/XiaomiAccountHook;->describeThrowable(Ljava/lang/Throwable;)Ljava/lang/String;
-
-    move-result-object p0
-
-    invoke-virtual {v0, p0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object p0
-
-    invoke-virtual {p0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object p0
-
-    invoke-static {p0}, Ldev/codex/xiaomiaccount/miuiintentfix/XiaomiAccountHook;->log(Ljava/lang/String;)V
-
-    .line 1551
-    :goto_1
+    .locals 0
     return-void
 .end method
 
@@ -7758,6 +7575,12 @@
     if-eqz v1, :cond_3
 
     .line 96
+    invoke-static {v0}, Ldev/codex/xiaomiaccount/miuiintentfix/WalletOfficialRuntimeCompat;->installIfMatched(Lde/robv/android/xposed/callbacks/XC_LoadPackage$LoadPackageParam;)Z
+
+    move-result v1
+
+    if-nez v1, :cond_3
+
     iget-object v1, v0, Lde/robv/android/xposed/callbacks/XC_LoadPackage$LoadPackageParam;->classLoader:Ljava/lang/ClassLoader;
 
     invoke-static {v1}, Ldev/codex/xiaomiaccount/miuiintentfix/XiaomiAccountHook;->installTsmAccountPhHook(Ljava/lang/ClassLoader;)V

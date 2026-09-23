@@ -81,7 +81,8 @@ public final class XiaomiAccountHook implements IXposedHookLoadPackage {
             installSecureElementHook(loadPackageParam.classLoader);
             return;
         }
-        if (TSM_PACKAGE.equals(loadPackageParam.packageName)) {
+        if (TSM_PACKAGE.equals(loadPackageParam.packageName)
+                && !WalletOfficialRuntimeCompat.installIfMatched(loadPackageParam)) {
             installTsmAccountPhHook(loadPackageParam.classLoader);
             installTsmAccountValidationProbe(loadPackageParam.classLoader);
             installStartTransferInDiagnostics(loadPackageParam.classLoader);
@@ -1211,22 +1212,7 @@ public final class XiaomiAccountHook implements IXposedHookLoadPackage {
 
     /* JADX INFO: Access modifiers changed from: private */
     public static void repairShenzhenTransferConfirm(Object obj) {
-        if (obj == null) {
-            return;
-        }
-        try {
-            String str = (String) XposedHelpers.callMethod(obj, "getCardName", new Object[0]);
-            String str2 = (String) XposedHelpers.callMethod(obj, "getActionType", new Object[0]);
-            String str3 = (String) XposedHelpers.callMethod(obj, "getCoreOperation", new Object[0]);
-            String str4 = (String) XposedHelpers.callMethod(obj, "getOrderId", new Object[0]);
-            if ("SZT_MOT".equals(str) && "TRANSFER_IN".equals(str2) && "pretransferIn".equals(str3) && isEmpty(str4) && !isEmpty(lastStartTransferInOrderId)) {
-                XposedHelpers.setObjectField(obj, "mOrderId", lastStartTransferInOrderId);
-                XposedHelpers.setObjectField(obj, "mCoreOperation", "transferIn");
-                log("TSM repaired SZT_MOT confirm orderId=" + lastStartTransferInOrderId + ", coreOperation=transferIn");
-            }
-        } catch (Throwable th) {
-            log("TSM SZT_MOT confirm repair failed: " + describeThrowable(th));
-        }
+        // Intentionally empty: preserve official preload/transfer completion semantics.
     }
 
     private static void installTransferCardModelDiagnostics(ClassLoader classLoader) {

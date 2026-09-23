@@ -15,6 +15,7 @@ $module = [IO.Path]::GetFullPath($ModuleDir)
 $apktool = [IO.Path]::GetFullPath($ApktoolJar)
 $output = [IO.Path]::GetFullPath($OutputDir)
 if (-not (Test-Path -LiteralPath (Join-Path $module 'apktool.yml'))) { throw "Not an Apktool project: $module" }
+if (Test-Path -LiteralPath (Join-Path $module 'compat-src')) { throw 'This module also contains Java additions. Use tools/Build-MiuiIntentFix.py to include them.' }
 if (-not (Test-Path -LiteralPath $apktool -PathType Leaf)) { throw "Apktool jar not found: $apktool" }
 [IO.Directory]::CreateDirectory($output) | Out-Null
 

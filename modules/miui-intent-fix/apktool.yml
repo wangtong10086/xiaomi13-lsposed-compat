@@ -7,8 +7,8 @@ sdkInfo:
   minSdkVersion: 26
   targetSdkVersion: 36
 versionInfo:
-  versionCode: 15
-  versionName: 2.2-ese-routing
+  versionCode: 30
+  versionName: 2.6.9-cleanup
 resourcesInfo:
   packageId: 127
   packageName: dev.codex.xiaomiaccount.miuiintentfix

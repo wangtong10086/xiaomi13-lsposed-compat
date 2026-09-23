@@ -30,6 +30,14 @@ Signing requires an external keystore and environment variables; no key is store
 
 Build the Java-based XMSF or WeChat module with `tools/Build-XposedJavaModule.ps1`; it requires local Android platform/build-tools paths and the same external signing inputs.
 
+Build `miui-intent-fix` with `tools/Build-MiuiIntentFix.py`, which combines its
+smali and Java sources. Version 2.6.9 excludes wallet diagnostic probes and
+completed signature-migration hooks from the production APK. Reproduction probes
+require an explicit `--include-diagnostics` build and their documented runtime
+markers. See the [wallet investigation and cleanup record](docs/xiaomi-wallet-compat-android16.md)
+for the launcher, official-wallet migration, signed-public-key bridge, transit
+request compatibility, test results and limits.
+
 ## Install/upgrade
 
 1. Verify the APK SHA-256.
@@ -39,6 +47,9 @@ Build the Java-based XMSF or WeChat module with `tools/Build-XposedJavaModule.ps
 5. Test the affected feature and unrelated features in the same app.
 
 Locally validated signed APKs are prerelease assets. Their checksums are in `RELEASES.md`; the installed certificate must also match the expected upgrade lineage. A source rebuild with another key is not an in-place upgrade.
+
+The wallet cleanup update is delivered as source and documentation only; its local
+build checksum is recorded without publishing an APK or creating a new release.
 
 Because these modules hook private implementation details, re-review them after every Android, Xiaomi app, LSPosed, or Vector update.
 
